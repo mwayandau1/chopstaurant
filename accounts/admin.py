@@ -1,7 +1,12 @@
 from django.contrib import admin
 from .models import User, Profile
+from django.contrib.auth.admin import UserAdmin
 
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(UserAdmin):
+    filter_horizontal = ()
+    list_filter = ()
+    fieldsets = ()
+    ordering = ('-dateJoined',)
     list_display = ['firstName', 'lastName', 'username', 'email']
     list_display_links = ['username', 'email']
 

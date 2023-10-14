@@ -1,5 +1,6 @@
 from django import forms
 from .models import User, Profile
+from vendor.models import Vendor
 
 
 class UserForm(forms.ModelForm):
@@ -19,3 +20,9 @@ def clean(self):
 
     if password != confirm_password:
         raise forms.ValidationError("Passwords do not match")
+
+
+class VendorForm(forms.ModelForm):
+    class Meta:
+        model = Vendor
+        fields = ['ven_name', 'ven_license']

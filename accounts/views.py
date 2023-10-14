@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import UserForm, VendorForm
 from .models import User, Profile
-from django.contrib import messages
+from django.contrib import messages, auth
 
 
 def register(request):
@@ -63,3 +63,28 @@ def registerVendor(request):
         'ven_form': ven_form
     }
     return render(request, 'accounts/register-vendor.html', context)
+
+
+def login(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        user = auth.authenticate(email=email, password=password)
+        if user is not None:
+            auth.login(request, user)
+            messages.success(request, 'You are logged in!')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Password or email is incorrect')
+            return redirect('login')
+    return render(request, 'accounts/login.html')
+
+
+def logout(request):
+    auth.logout(request)
+    messages.success(request, "You are logged out!")
+    return redirect('login')
+
+
+def dashboard(request):
+    return render(request, 'accounts/dashboard.html')

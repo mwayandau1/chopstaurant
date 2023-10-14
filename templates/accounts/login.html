@@ -1,0 +1,84 @@
+{% extends 'base.html' %} {% block content %}
+<div class="main-section">
+  <div
+    class="page-section nopadding cs-nomargin"
+    style="
+      margin-top: 0px;
+      padding-top: 60px;
+      padding-bottom: 60px;
+      margin-bottom: 0px;
+    "
+  >
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="user-dashboard loader-holder" style="min-height: auto; width: 450px;">
+            <div class="user-holder">
+              <h4 class="text-center" style="margin-bottom: 0">
+                SIGN IN
+              </h4>
+              <p class="text-center">
+                Order from your favorite Restaurant
+              </p>
+              <hr />
+              <div id="restaurant-sets-holder">
+                <form method="post" action="{% url 'login' %}">
+                  {% csrf_token %}
+                 
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <div class="row">                       
+                                
+                                
+                                <div
+                                  class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                >
+                                  <div class="field-holder">
+                                    <label>Email</label>
+                                    <input type="email" name="email" id="" placeholder="Enter your email">
+                                  </div>
+                                </div>
+                                
+                                <div
+                                  class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                >
+                                  <div class="field-holder">
+                                    <label>Password</label>
+                                    <input type="password" name="password" id="" placeholder="Enter your password">
+                                  </div>
+                                </div>
+                                
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <div class="field-holder">
+                            <div class="payment-holder">
+                              <input
+                                type="submit"
+                                value="Submit"
+                                id="btn-next-restaurant-information"
+                                class="bgcolor"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </form>
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="field-holder">
+                      {% include 'includes/alert.html' %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

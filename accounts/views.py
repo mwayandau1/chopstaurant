@@ -1,7 +1,28 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib import messages, auth
+from django.core.exceptions import PermissionDenied
+
+
 from .forms import UserForm, VendorForm
 from .models import User, Profile
-from django.contrib import messages, auth
+from .utils import getAccountUrl
+
+# RESTRICT VENDOR FROM ACCESSING CUSTOMER PAGE
+
+
+def checkRoleVendor(user):
+    if user.role == 1:
+        return True
+    else:
+        raise PermissionDenied
+
+
+def checkRoleCustomer(user):
+    if user.role == 2:
+        return True
+    else:
+        raise PermissionDenied
 
 
 def register(request):
@@ -31,7 +52,10 @@ def register(request):
 
 
 def registerVendor(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        messages.info(request, 'You are already logged in')
+        return redirect('dashboard')
+    elif request.method == 'POST':
         form = UserForm(request.POST)
         ven_form = VendorForm(request.POST, request.FILES)
         if form.is_valid() and ven_form.is_valid():
@@ -66,14 +90,17 @@ def registerVendor(request):
 
 
 def login(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        messages.info(request, 'You are already logged in')
+        return redirect('my-account')
+    elif request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
         user = auth.authenticate(email=email, password=password)
         if user is not None:
             auth.login(request, user)
             messages.success(request, 'You are logged in!')
-            return redirect('dashboard')
+            return redirect('my-account')
         else:
             messages.error(request, 'Password or email is incorrect')
             return redirect('login')
@@ -86,5 +113,21 @@ def logout(request):
     return redirect('login')
 
 
-def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+@login_required(login_url='login')
+def myAccount(request):
+    url = getAccountUrl(request)
+
+    return redirect(url)
+
+
+@login_required(login_url='login')
+@user_passes_test(checkRoleCustomer)
+def customerDashboard(request):
+    return render(request, 'accounts/customer-dashboard.html')
+
+
+@login_required(login_url='login')
+@user_passes_test(checkRoleVendor)
+def vendorDashboard(request):
+
+    return render(request, 'accounts/vendor-dashboard.html')

@@ -5,6 +5,7 @@ from .models import Vendor
 
 
 class VendorAdmin(admin.ModelAdmin):
+    list_editable = ('is_approved',)
     list_display = ('user', 'ven_name', 'is_approved', 'created')
 
 

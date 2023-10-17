@@ -35,3 +35,12 @@ def send_email_verification(request, user, mail_subject, email_template):
     mail = EmailMessage(mail_subject, message,
                         from_email=from_email, to=[to_email])
     mail.send()
+
+
+def send_email_approval(mail_subject, email_template, context):
+    from_email = settings.DEFAULT_FROM_EMAIL
+    to_email = context['user'].email
+    message = render_to_string(email_template, context)
+    mail = EmailMessage(mail_subject, message,
+                        from_email=from_email, to=[to_email])
+    mail.send()

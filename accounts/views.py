@@ -10,6 +10,7 @@ from .forms import UserForm, VendorForm
 from .models import User, Profile
 from .utils import getAccountUrl
 from .utils import send_email_verification
+from vendor.models import Vendor
 
 # RESTRICT VENDOR FROM ACCESSING CUSTOMER PAGE
 
@@ -208,5 +209,9 @@ def customerDashboard(request):
 @login_required(login_url='login')
 @user_passes_test(checkRoleVendor)
 def vendorDashboard(request):
+    vendor = Vendor.objects.get(user=request.user)
+    context = {
+        'vendor': vendor,
+    }
 
-    return render(request, 'accounts/vendor-dashboard.html')
+    return render(request, 'accounts/vendor-dashboard.html', context)

@@ -1,0 +1,9 @@
+{% autoescape off%}
+Hello, {{user.firstName}}
+{% if is_approved %}
+Congratulations, Your restaurant has been approved for online service with our company!
+{% else %}
+Sorry, your has restaurant has not been approved by our admin team!
+For more enquries contact us on ...
+{% endif %}
+{% endautoescape %}

@@ -1,6 +1,9 @@
-# from vendor.models import Vendor
+from vendor.models import Vendor
 
 
-# def getVendor(request):
-#     vendor = Vendor.objects.get(user=request.user)
-#     return dict(vendor=vendor)
+def getVendor(request):
+    try:
+        vendor = Vendor.objects.get(user=request.user)
+    except:
+        vendor = None
+    return dict(vendor=vendor)

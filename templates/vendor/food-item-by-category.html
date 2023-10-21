@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% include 'includes/alert.html' %}
+<div class="main-section">
+    {% include 'includes/cover.html' %}
+            <!-- Row End -->
+        </div>
+        <!-- Container End -->
+    </div>
+    <div class="page-section account-header buyer-logged-in">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    {% include 'includes/v-sidebar.html' %}
+                    
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div class="user-dashboard loader-holder">
+                        <div class="user-holder">
+                            <h5 class="text-uppercase text-center">Build Your Menu</h5>
+                            <hr>
+                            <div class="btn btn-secondary" onclick="history.back()"><i class="fa fa-angle-left" aria-hidden="true"></i>Back</div>
+                            <br><br>
+                            <h6> Category:<strong class="text-uppercase">{{category.category_name}}</strong></h6>
+                            {% if food_items %}
+                            <table class="table table-hover table-borderless">
+                               
+                                <tbody>
+                                    {% for fooditem in food_items%}
+                                  <tr>
+                                    <td class="text-left"> <img src="{{fooditem.image.url}}" alt="{{fooditem.image}}" width="80px"></td>
+                                    
+                                    <td class="text-left">{{forloop.counter}}</td>
+                                    <td class="text-left"><a href="{% url 'food-item-by-category' category.id %}"> <p class="mb-0 font-weight-bold">{{fooditem.title}}</p>
+                                        <small class="text-muted">{{fooditem.description}}</small>
+                                    </a> </td>
+                                    <a href="{% url 'edit-category' category.id %}"><td><i class="fa fa-pencil" aria-hidden="true"></i></a> 
+                                        &nbsp; <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                             </td>
+                                   
+                                  </tr> 
+                                  {% endfor %}                              
+                                 
+                                </tbody>
+                              </table>
+                              {% else %}
+                              
+                              <div class="text-center">
+                                <h5>No Food Items Fount</h5>
+                                <a href="#" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i>
+                                    Add Food</a>
+                              </div>
+                              {% endif %}
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

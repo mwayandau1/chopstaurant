@@ -1,0 +1,5 @@
+---Google Autocomplete Video---
+https://www.youtube.com/watch?v=c3MjU9E9buQ
+
+---Script to load in HTML head---
+<script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places&callback=initAutoComplete" async defer></script>
